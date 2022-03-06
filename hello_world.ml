@@ -8,13 +8,11 @@ module Self = Plugin.Register
     end)
 
 let run () =
-  try
-    let chan = open_out "hello.out" in
-    Printf.fprintf chan "Hello, world!\n";
-    flush chan;
-    close_out chan
-  with Sys_error _ as exc ->
-    let msg = Printexc.to_string exc in
-    Printf.eprintf "There was an error: %s\n" msg
+  Self.result "Hello, world!";
+  let product =
+    Self.feedback ~level:2 "Computing the product of 11 and 5...";
+    11 * 5
+  in
+  Self.result "11 * 5 = %d" product
 
 let () = Db.Main.extend run
